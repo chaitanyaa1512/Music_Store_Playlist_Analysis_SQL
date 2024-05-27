@@ -1,0 +1,86 @@
+/*Question Set-1: Easy*/
+
+-- Q1: Who is the senior most employee based on the job title?
+
+select * from employee
+order by levels desc limit 1
+
+-- Q2 : Which countries have thye most Invoices?
+
+SELECT COUNT(*) as c, billing_country 
+from invoice
+group by billing_country
+order by c desc
+
+-- Q3 : What are top 3 values of total Invoices?
+
+SELECT total from Invoice
+order by total desc
+limit 3
+
+-- Q4: Which city has the best customers? We would like to throw a promotional Music Festival in the city we made the most money. 
+-- Write a query that returns one city that has the highest sum of invoice totals. 
+-- Return both the city name & sum of all invoice totals
+
+SELECT SUM(total) as invoice_total, billing_city from Invoice
+group by billing_city
+order by invoice_total desc
+
+
+-- Q5: Who is the best customer? The customer who has spent the most money will be declared the best customer. 
+-- Write a query that returns the person who has spent the most money.
+
+select customer.customer_id, customer.first_name, customer.last_name, SUM(invoice.total) as total
+from Customer
+JOIN invoice ON customer.customer_id =invoice.customer_id
+GROUP BY customer.customer_id
+ORDER BY total DESC
+limit 1
+
+
+/*Question Set-2: Moderate*/
+
+-- Q1: Write query to return the email, first name, last name, & Genre of all Rock Music listeners. 
+-- Return your list ordered alphabetically by email starting with A.
+
+select distinct email as Email, first_name as FirstName, last_name as LastName, genre.Name as Name
+from customer
+JOIN invoice on customer.customer_id=invoice.customer_id
+JOIN invoice_line on invoice_line.invoice_id=invoice.invoice_id
+JOIN track on track.track_id= invoice_line.track_id
+JOIN genre on genre.genre_id= track.genre_id
+WHERE genre.name LIKE 'Rock'
+ORDER BY email asc;
+
+
+-- Q2: Let's invite the artists who have written the most rock music in our dataset. 
+-- Write a query that returns the Artist name and total track count of the top 10 rock bands.
+
+SELECT DISTINCT email,first_name, last_name
+FROM customer
+JOIN invoice ON customer.customer_id = invoice.customer_id
+JOIN invoiceline ON invoice.invoice_id = invoiceline.invoice_id
+WHERE track_id IN(
+	SELECT track_id FROM track
+	JOIN genre ON track.genre_id = genre.genre_id
+	WHERE genre.name LIKE 'Rock'
+)
+ORDER BY email;
+
+
+--Q3: Return all the track names that have a song length longer than the average song length. 
+-- Return the Name and Milliseconds for each track. Order by the song length with the longest songs listed first.
+select  name, milliseconds
+from track
+WHERE milliseconds>(
+	SELECT AVG(milliseconds) as Avg_track_length
+	FROM track
+)
+ORDER BY milliseconds DESC;
+
+
+/*Question Set-3: Advanced*/
+
+
+
+
