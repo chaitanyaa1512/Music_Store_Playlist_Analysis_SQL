@@ -18,4 +18,3 @@ By leveraging SQL to analyze these datasets, the project aims to identify key tr
 ![Screenshot 2024-05-30 225312](https://github.com/chaitanyaa1512/Music_Store_Playlist_Analysis_SQL/assets/94222140/4068c022-75dc-45a7-9e4a-5be9752dad14)
 
 
-.![Music_database_schema](https://github.com/chaitanyaa1512/Music_Store_Playlist_Analysis_SQL/assets/94222140/e925a46d-3a47-4c39-ad7b-060f14856c72)
